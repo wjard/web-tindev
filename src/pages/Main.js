@@ -11,11 +11,16 @@ import api from '../services/api';
 import logo from '../assets/logo.svg';
 import like from '../assets/like.svg';
 import dislike from '../assets/dislike.svg';
+import itsamatch from '../assets/itsamatch.png';
+
+//parte do websocket
+import socket from 'socket.io-client';
 
 //sobre propriedades da rota ver mais no Login.js
 //match = contém dados sobre a rota, parametros etc
 export default function Main({ match }) {
     const [users, setUsers] = useState([]);
+    const [matchDev, setMatchDev] = useState(null);
 
     useEffect(() => {
         async function loadUsers() {
@@ -30,6 +35,31 @@ export default function Main({ match }) {
         }
 
         loadUsers();
+    }, [match.params.id]);
+
+    useEffect(() => {
+        const con = socket('https://api-tindev.azurewebsites.net', {
+            query: { user: match.params.id }
+        });
+
+        con.on('match', result => {
+            console.log(result);
+            setMatchDev(result);
+        });
+
+        /*
+        //Escutar mensagens do backend
+        con.on('e ai?', result=>{
+            console.log(`Backend message: ${JSON.stringify(result)}`);
+        });
+        //teste de envio de menagem para o backend
+        setTimeout(() => {
+            con.emit('opa', {
+                message: 'Opa! Beleza?!'
+            })
+        }, 2000);
+        */
+
     }, [match.params.id]);
 
     async function handleLike(id) {
@@ -100,9 +130,22 @@ export default function Main({ match }) {
                         </ul>
                     ) : (
                         <div className="empty">
-                            Acabou :(
+                            Acabou :[
                     </div>
                     )
+            }
+
+            {
+                matchDev && (
+                    <div className="match-container">
+                        <img src={itsamatch} alt="It's a match"></img>
+                        <img className="avatar" src={matchDev.avatar} alt=""></img>
+                        <strong>{matchDev.name}</strong>
+                        <small>{matchDev.username}</small>
+                        <p>{matchDev.bio}</p>
+                        <button onClick={() => setMatchDev(null)}>Fechar</button>
+                    </div>
+                )
             }
         </div>
     )
