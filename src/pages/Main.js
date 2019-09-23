@@ -73,7 +73,7 @@ export default function Main({ match }) {
     //será modificado o conteudo da 'users', utilizando o 'setUsers'
     //é necessário alterar os dados via 'setUsers' para que haja
     // a alteração do estado do controle
-    setUsers(users.filter(u => u._id != id));
+    setUsers(users.filter(u => u._id !== id));
   }
 
   async function handleDislike(id) {
@@ -88,7 +88,7 @@ export default function Main({ match }) {
     //será modificado o conteudo da 'users', utilizando o 'setUsers'
     //é necessário alterar os dados via 'setUsers' para que haja
     // a alteração do estado do controle
-    setUsers(users.filter(u => u._id != id));
+    setUsers(users.filter(u => u._id !== id));
   }
 
   return (

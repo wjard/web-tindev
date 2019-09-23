@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import './App.css';
+import "./App.css";
 
 //import Login from './pages/Login';
-import Routes from './routes';
+import Routes from "./routes";
 
 //importar-se imagens etc no react...é normal
-import logo from './assets/logo.svg';
+//import logo from './assets/logo.svg';
 
 function App() {
   return (
